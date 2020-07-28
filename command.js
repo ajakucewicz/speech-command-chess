@@ -15,6 +15,8 @@ function setup() {
         if (speechCom.resultValue) {
            // createP(speechCom.resultString);
            console.log(speechCom.resultString);
+           moveWithVoice(speechCom.resultString)
         }
+        console.log(speechCom);
     }
 }

@@ -198,9 +198,57 @@ let getPieceValue = function (piece, x, y) {
 
 // functions dealing with board state
 
+// moves the piece to the specified spot via voice command
+// takes a string
+function moveWithVoice(target) {
+    let move = game.move(cleanUp(target), {sloppy: true});
+
+    // if the move is not valid, exit function
+    if (move === null) {
+        createP('invalid move');
+        return;
+    }
+    console.log(move);
+
+    // updates text representation of the game state
+    renderMoveHistory(game.history());
+
+    // wait then have the computer move
+    window.setTimeout(makeBestMove, 250);
+
+    //update the board position
+    board.position(game.fen());
+}
+
+function cleanUp(target) {
+    // cleans up inconsistencies in input string
+    target = target.toLowerCase();
+    
+    // please hire us for STEP   
+    const CONTRARIETIES = [/-|\s/g, '', /before/g, 'b4', /envy/g, 'nb', /for/g, '4', /and/g, 'n',
+        /indy/g, 'nd', /angie/g, 'ng', /one/g, '1', /two/g, '2', /three/g, '3', /four/g, '4',
+        /five/g, '5', /six/g, '6', /seven/g, '7', /eight/g, '8', /nine/g, '9', /zero/g, '0',
+        /any/g, 'ne', /m/g, 'n', /to/g, '2', /pawn/g, '', /knight|night|nite/g, 'k', /bishop/g, 'b',
+        /rook|book|cook|nook|brook|brooke/g, 'r', /queen|green|mean|wean/g, 'q', /king|wing|thing|sing/g, 'k'];
+      
+    // iterate through CONTRARIETIES and replace each regex with its replacement
+    for (let i = 0; i < CONTRARIETIES.length; i += 2) {
+        target = target.replace(CONTRARIETIES[i], CONTRARIETIES[i + 1]);
+    }
+
+    // make sure any references to the type of piece are uppercase
+    if (target.charAt(0).match(/n|r|q|k/g) || target.charAt(0).match(/b/g) && target.length % 2 === 1) {
+        target = target.replace(target.charAt(0), target.charAt(0).toUpperCase());
+    }
+
+    console.log(target);
+    
+    return target;
+}
+
 // called when the user trys to drag a piece
 let onDragStart = function (source, piece, position, orientation) {
-    // if the square is blank or the game is over, don't allow drag
+    // if the piece is black or the game is over, don't allow drag
     if (game.in_checkmate() || game.in_draw() || piece.search(/^b/) !== -1) {
         return false;
     }
