@@ -1,24 +1,20 @@
-let classifier;
 
-function preload() {
-    const OPTIONS = {
-        probablilityThreshold = 0.70
-    };
-    // classifier w/ teachable machine custom model:
-    // const classifier = ml5.soundClassifier('path/to/model.json', modelReady);
-    classifier = ml5.soundClassifier('SpeechCommands18w', OPTIONS, modelReady);
-}
 
-function modelReady() {
-    // classify sound
-    classifier.classify(gotCommand);
-}
+//let myVoice = new p5.speech();
 
-function gotCommand(error, command) {
-    if (error) {
-        console.log(error);
-        return;
+function setup() {
+    noCanvas();
+    let speechCom = new p5.SpeechRec('en-US', gotSpeech);
+    
+    let continuous = true;
+    let interim = false;
+
+    speechCom.start(continuous, interim);
+
+    function gotSpeech() {
+        if (speechCom.resultValue) {
+           // createP(speechCom.resultString);
+           console.log(speechCom.resultString);
+        }
     }
-    // console.log the command
-    console.log(command);
 }

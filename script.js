@@ -1,78 +1,79 @@
-let board,
-    game = new Chess();
+let board;
+let game = new Chess();
+
 
 // minimax functions
 
 // returns the current best move
-let minimaxRoot =function(depth, game, isMaximisingPlayer) {
+let minimaxRoot =function(depth, game, isMax) {
 
-    let newGameMoves = game.ugly_moves();
-    let bestMove = -9999;
-    let bestMoveFound;
+    let newMoves = game.ugly_moves();
+    let best = -9999;
+    let bestFound;
 
-    for(let i = 0; i < newGameMoves.length; i++) {
-        let newGameMove = newGameMoves[i]
-        game.ugly_move(newGameMove);
-        let value = minimax(depth - 1, game, -10000, 10000, !isMaximisingPlayer);
+    for(let i = 0; i < newMoves.length; i++) {
+        let newMove = newMoves[i]
+        game.ugly_move(newMove);
+        let value = minimax(depth - 1, game, -10000, 10000, !isMax);
         game.undo(); //undo() takes back the last half-move & returns move object
         
         //if value of newMove is greater than value of bestMove, bestMove set to value
         //and bestPlayerMove set to newMove
-        if(value >= bestMove) {
-            bestMove = value;
-            bestMoveFound = newGameMove;
+        if(value >= best) {
+            best = value;
+            bestFound = newMove;
         }
     }
-    return bestMoveFound; //returns best move based on 'value'
+    return bestFound; //returns best move based on 'value'
 }; 
 
 // returns the value of the best move for the current player
-let minimax = function (depth, game, alpha, beta, isMaximisingPlayer) {
+let minimax = function (depth, game, alpha, beta, isMax) {
     positionCount++;
     if (depth === 0) {
         return -evaluateBoard(game.board());
     }
 
-    let newGameMoves = game.ugly_moves();
+    let newMoves = game.ugly_moves();
 
     // if the current player is the maximizing player then get the move with the highest score
-    if (isMaximisingPlayer) {
-        let bestMove = -9999;
+    if (isMax) {
+        let best = -9999;
         // make each move, check the value of the board, then undo the move
-        for (let i = 0; i < newGameMoves.length; i++) {
-            game.ugly_move(newGameMoves[i]);
-            bestMove = Math.max(bestMove, minimax(depth - 1, game, alpha, beta, !isMaximisingPlayer));
+        for (let i = 0; i < newMoves.length; i++) {
+            game.ugly_move(newMoves[i]);
+            best = Math.max(best, minimax(depth - 1, game, alpha, beta, !isMax));
             game.undo();
             // updates the alpha value if the best move is better than the current alpha
-            alpha = Math.max(alpha, bestMove);
+            alpha = Math.max(alpha, best);
             // if black already has a better move and therefore won't go down this path,
             // return the current value of best without wasting any more time on needless computation
             if (beta <= alpha) {
-                return bestMove;
+                return best;
             }
         }
         // return score of the board state base on the data for the best move found for white (assuming optimal play from black)
-        return bestMove;
+        return best;
     } else {
         // initialize best move as basically infinity for comparison
-        let bestMove = 9999;
+        let best = 9999;
         // make each move, check the value of the board, then undo the move
-        for (let i = 0; i < newGameMoves.length; i++) {
-            game.ugly_move(newGameMoves[i]);
-            bestMove = Math.min(bestMove, minimax(depth - 1, game, alpha, beta, !isMaximisingPlayer));
+        for (let i = 0; i < newMoves.length; i++) {
+            game.ugly_move(newMoves[i]);
+            best = Math.min(best, minimax(depth - 1, game, alpha, beta, !isMax));
             game.undo();
 
             // updates the beta value if the bestMove is better (for black) than the current beta
-            beta = Math.min(beta, bestMove);
+            beta = Math.min(beta, best);
 
             //if white already has a better move and therefore won't go down this path,
             // return the current value of bestMove without wasting any more time on needless computation
             if (beta <= alpha) {
-                return bestMove;
+                return best;
             }
         }
         // return score of the board state base on the data for the best move found for black (assuming optimal play from white)
-        return bestMove;
+        return best;
     }
 };
 
@@ -88,14 +89,8 @@ let evaluateBoard = function (board) {
     return totalEvaluation;
 };
 
-// reverses the array 
-let reverseArray = function(array) {
-    return array.slice().reverse();
-};
-
 // value matrices to augment the strength of the evaluation function specific to each piece
-let pawnEvalWhite =
-    [
+let pawnEvalWhite = [
         [0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0],
         [5.0,  5.0,  5.0,  5.0,  5.0,  5.0,  5.0,  5.0],
         [1.0,  1.0,  2.0,  3.0,  3.0,  2.0,  1.0,  1.0],
@@ -106,10 +101,10 @@ let pawnEvalWhite =
         [0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0]
     ];
 
-let pawnEvalBlack = reverseArray(pawnEvalWhite);
+// reverses only the outer array, effectively flipping the matrix about the x-axis so it becomes accurate for black
+let pawnEvalBlack = pawnEvalWhite.slice().reverse();
 
-let knightEval =
-    [
+let knightEval = [
         [-5.0, -4.0, -3.0, -3.0, -3.0, -3.0, -4.0, -5.0],
         [-4.0, -2.0,  0.0,  0.0,  0.0,  0.0, -2.0, -4.0],
         [-3.0,  0.0,  1.0,  1.5,  1.5,  1.0,  0.0, -3.0],
@@ -131,7 +126,7 @@ let bishopEvalWhite = [
     [ -2.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -2.0]
 ];
 
-let bishopEvalBlack = reverseArray(bishopEvalWhite);
+let bishopEvalBlack = bishopEvalWhite.slice().reverse();
 
 let rookEvalWhite = [
     [  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0],
@@ -144,7 +139,7 @@ let rookEvalWhite = [
     [  0.0,   0.0, 0.0,  0.5,  0.5,  0.0,  0.0,  0.0]
 ];
 
-let rookEvalBlack = reverseArray(rookEvalWhite);
+let rookEvalBlack = rookEvalWhite.slice().reverse();
 
 let evalQueen = [
     [ -2.0, -1.0, -1.0, -0.5, -0.5, -1.0, -1.0, -2.0],
@@ -169,7 +164,7 @@ let kingEvalWhite = [
     [  2.0,  3.0,  1.0,  0.0,  0.0,  1.0,  3.0,  2.0 ]
 ];
 
-let kingEvalBlack = reverseArray(kingEvalWhite);
+let kingEvalBlack = kingEvalWhite.slice().reverse();
 
 
 
@@ -201,13 +196,12 @@ let getPieceValue = function (piece, x, y) {
 };
 
 
-/* board visualization and games state handling */
+// functions dealing with board state
 
 // called when the user trys to drag a piece
 let onDragStart = function (source, piece, position, orientation) {
     // if the square is blank or the game is over, don't allow drag
-    if (game.in_checkmate() === true || game.in_draw() === true ||
-        piece.search(/^b/) !== -1) {
+    if (game.in_checkmate() || game.in_draw() || piece.search(/^b/) !== -1) {
         return false;
     }
 };
@@ -303,7 +297,7 @@ let greySquare = function(square) {
     let squareEl = $('#board .square-' + square);
 
     let background = '#a9a9a9';
-    if (squareEl.hasClass('black-3c85d') === true) {
+    if (squareEl.hasClass('black-3c85d')) {
         background = '#696969';
     }
 
