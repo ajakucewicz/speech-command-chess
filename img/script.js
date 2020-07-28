@@ -1,9 +1,8 @@
 let board,
     game = new Chess();
 
-// minimax functions
+/*The "AI" part starts here */
 
-// returns the current best move
 let minimaxRoot =function(depth, game, isMaximisingPlayer) {
 
     let newGameMoves = game.ugly_moves();
@@ -14,19 +13,15 @@ let minimaxRoot =function(depth, game, isMaximisingPlayer) {
         let newGameMove = newGameMoves[i]
         game.ugly_move(newGameMove);
         let value = minimax(depth - 1, game, -10000, 10000, !isMaximisingPlayer);
-        game.undo(); //undo() takes back the last half-move & returns move object
-        
-        //if value of newMove is greater than value of bestMove, bestMove set to value
-        //and bestPlayerMove set to newMove
+        game.undo();
         if(value >= bestMove) {
             bestMove = value;
             bestMoveFound = newGameMove;
         }
     }
-    return bestMoveFound; //returns best move based on 'value'
-}; 
+    return bestMoveFound;
+};
 
-// returns the value of the best move for the current player
 let minimax = function (depth, game, alpha, beta, isMaximisingPlayer) {
     positionCount++;
     if (depth === 0) {
@@ -35,49 +30,33 @@ let minimax = function (depth, game, alpha, beta, isMaximisingPlayer) {
 
     let newGameMoves = game.ugly_moves();
 
-    // if the current player is the maximizing player then get the move with the highest score
     if (isMaximisingPlayer) {
         let bestMove = -9999;
-        // make each move, check the value of the board, then undo the move
         for (let i = 0; i < newGameMoves.length; i++) {
             game.ugly_move(newGameMoves[i]);
             bestMove = Math.max(bestMove, minimax(depth - 1, game, alpha, beta, !isMaximisingPlayer));
             game.undo();
-            // updates the alpha value if the best move is better than the current alpha
             alpha = Math.max(alpha, bestMove);
-            // if black already has a better move and therefore won't go down this path,
-            // return the current value of best without wasting any more time on needless computation
             if (beta <= alpha) {
                 return bestMove;
             }
         }
-        // return score of the board state base on the data for the best move found for white (assuming optimal play from black)
         return bestMove;
     } else {
-        // initialize best move as basically infinity for comparison
         let bestMove = 9999;
-        // make each move, check the value of the board, then undo the move
         for (let i = 0; i < newGameMoves.length; i++) {
             game.ugly_move(newGameMoves[i]);
             bestMove = Math.min(bestMove, minimax(depth - 1, game, alpha, beta, !isMaximisingPlayer));
             game.undo();
-
-            // updates the beta value if the bestMove is better (for black) than the current beta
             beta = Math.min(beta, bestMove);
-
-            //if white already has a better move and therefore won't go down this path,
-            // return the current value of bestMove without wasting any more time on needless computation
             if (beta <= alpha) {
                 return bestMove;
             }
         }
-        // return score of the board state base on the data for the best move found for black (assuming optimal play from white)
         return bestMove;
     }
 };
 
-// returns numerical evaluation of the passed board state
-// positive if white is favored and negative if black is favored
 let evaluateBoard = function (board) {
     let totalEvaluation = 0;
     for (let i = 0; i < 8; i++) {
@@ -88,12 +67,10 @@ let evaluateBoard = function (board) {
     return totalEvaluation;
 };
 
-// reverses the array 
 let reverseArray = function(array) {
     return array.slice().reverse();
 };
 
-// value matrices to augment the strength of the evaluation function specific to each piece
 let pawnEvalWhite =
     [
         [0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0],
@@ -173,7 +150,7 @@ let kingEvalBlack = reverseArray(kingEvalWhite);
 
 
 
-//checks .type() of piece, returns abs value if not null
+
 let getPieceValue = function (piece, x, y) {
     if (piece === null) {
         return 0;
@@ -196,16 +173,13 @@ let getPieceValue = function (piece, x, y) {
     };
 
     let absoluteValue = getAbsoluteValue(piece, piece.color === 'w', x ,y);
-    // returns positive value if white, otherwise returns negative value
     return piece.color === 'w' ? absoluteValue : -absoluteValue;
 };
 
 
 /* board visualization and games state handling */
 
-// called when the user trys to drag a piece
 let onDragStart = function (source, piece, position, orientation) {
-    // if the square is blank or the game is over, don't allow drag
     if (game.in_checkmate() === true || game.in_draw() === true ||
         piece.search(/^b/) !== -1) {
         return false;
@@ -217,7 +191,6 @@ let makeBestMove = function () {
     game.ugly_move(bestMove);
     board.position(game.fen());
     renderMoveHistory(game.history());
-    // if the game is over triggers window pop-up
     if (game.game_over()) {
         alert('Game over');
     }
