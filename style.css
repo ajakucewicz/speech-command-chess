@@ -1,5 +1,5 @@
 h1 {
-    text-align: center;
+    margin: auto;
 }
 
 .board {
@@ -17,4 +17,3 @@ h1 {
     overflow-y: scroll;
 }
 
-#wrapper

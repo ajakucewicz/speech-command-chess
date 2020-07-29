@@ -13,46 +13,67 @@
 
 </head>
 <body>
-    <h1>Speech Command Chess</h1>
+
+    
 <div class="container">
-    <div class="row">
-        <div class="col-xs-12 col-md-8">
+    <div class="row justify-content-center p-5">
+        <h1>Speech Command Chess</h1>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-6">
             <div id="board" class="board"></div>
         </div>
-        <div class="col-xs-12 col-md-8">
+        <div class="col-6 text-center">
             <div class="jumbotron">
-                <h1 class="display-3">Chess Notation</h1>
-                <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+                <h4>Notation</h4>
+                
+                <ul class="list-unstyled" style = "text-align: left">
+                    <li>King = K</li>
+                    <li>Queen = Q</li>
+                    <li>Bishop = B</li>
+                    <li>Knight = N</li>
+                    <li>Rook = R</li>
+                    <li>Pawn = p / no notation</li>
+                </ul>
+               
+
+
                 <hr class="my-4">
-                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
             </div>
         </div>
     </div>
 </div>
 
 <div class="container">
-    <div class="row">
-        Search depth:
-        <select id="search-depth">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3" selected>3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-    </select>
-    </div>
+    <div class="row p-4">
 
-    <br>
-    <span>Positions evaluated: <span id="position-count"></span></span>
-    <br>
-    <span>Time: <span id="time"></span></span>
-    <br>
-    <span>Positions/s: <span id="positions-per-s"></span> </span>
-    <br>
-    <br>
-    <div id="move-history" class="move-history">
+        <div class="col-6 text-left">
+            Search depth:
+            <select id="search-depth">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3" selected>3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            
+            <br>
+            <span>Positions evaluated: <span id="position-count"></span></span>
+            <br>
+            <span>Time: <span id="time"></span></span>
+            <br>
+            <span>Positions/s: <span id="positions-per-s"></span> </span>
+            <br>
+            <br>
+            <div id="move-history" class="move-history">
+            </div>
+        </div>
+
+        <div class="col-6 text-left">
+            <button type="button" class="btn btn-primary" onclick="undoMove()">Undo</button>
+        </div>
+
     </div>
-</div>
 
     <!-- load p5, p5sound, p5 speech libraries-->
     <script src="https://cdn.jsdelivr.net/npm/p5@1.1.9/lib/p5.min.js"></script>
