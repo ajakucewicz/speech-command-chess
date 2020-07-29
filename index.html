@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+
     <!-- bootstrap css -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/darkly/bootstrap.min.css" integrity="sha384-Bo21yfmmZuXwcN/9vKrA5jPUMhr7znVBBeLxT9MA4r2BchhusfJ6+n8TLGUcRAtL" crossorigin="anonymous">
     <link rel="stylesheet" href="lib/chessboardjs/css/chessboard-0.3.0.css">
@@ -12,16 +13,34 @@
 
 </head>
 <body>
-<div id="board" class="board"></div>
-<div class="info">
-    Search depth:
-    <select id="search-depth">
+    <h1>Speech Command Chess</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-8">
+            <div id="board" class="board"></div>
+        </div>
+        <div class="col-xs-12 col-md-8">
+            <div class="jumbotron">
+                <h1 class="display-3">Chess Notation</h1>
+                <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+                <hr class="my-4">
+                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        Search depth:
+        <select id="search-depth">
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3" selected>3</option>
         <option value="4">4</option>
         <option value="5">5</option>
     </select>
+    </div>
 
     <br>
     <span>Positions evaluated: <span id="position-count"></span></span>
@@ -53,7 +72,6 @@
     <script src="command.js"></script>
 
     <!-- bootstrap jQuery, popper.js, js-->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script>

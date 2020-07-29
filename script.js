@@ -1,7 +1,6 @@
 let board;
 let game = new Chess();
 
-
 // minimax functions
 
 // returns the current best move
@@ -225,9 +224,10 @@ function cleanUp(target) {
     target = target.toLowerCase();
     
     // please hire us for STEP   
-    const TO_REPLACE = [/-|\s/g, '', /before/g, 'b4', /envy/g, 'nb', /for/g, '4', /and/g, 'n',
+    // potential : [/zero/g, '0'], 
+    const TO_REPLACE = [/-|\s/g, '', /affix/g, 'a6', /before/g, 'b4', /envy/g, 'nb', /for/g, '4', /and/g, 'n',
         /indy/g, 'nd', /angie/g, 'ng', /one/g, '1', /two/g, '2', /three/g, '3', /four/g, '4',
-        /five/g, '5', /six/g, '6', /seven/g, '7', /eight/g, '8', /nine/g, '9', /zero/g, '0', /any/g, 'ne',
+        /five/g, '5', /six/g, '6', /seven/g, '7', /eight/g, '8', /nine/g, '9', /any/g, 'ne',
         /m/g, 'n', /to/g, '2', /pawn|awn|lawn|brawn|spawn/g, '', /knight|night|nite/g, 'k', /bishop|ketchup/g, 'b',
         /rook|book|cook|nook|brook|brooke/g, 'r', /queen|green|mean|wean/g, 'q', /king|wing|thing|sing/g, 'k'];
       
