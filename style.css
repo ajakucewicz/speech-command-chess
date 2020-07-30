@@ -17,4 +17,9 @@ h1 {
     overflow-y: scroll;
 }
 
+button {
+    text-align: center;
+    align-content: center;
+}
+
 
