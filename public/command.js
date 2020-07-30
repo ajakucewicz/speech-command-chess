@@ -1,4 +1,3 @@
-
 let speechCom; 
 
 function setup() {

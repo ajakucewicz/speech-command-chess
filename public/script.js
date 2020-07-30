@@ -11,7 +11,7 @@ let minimaxRoot =function(depth, game, isMax) {
     let bestFound;
 
     for(let i = 0; i < newMoves.length; i++) {
-        let newMove = newMoves[i]
+
         game.ugly_move(newMove);
         let value = minimax(depth - 1, game, -10000, 10000, !isMax);
         game.undo(); //undo() takes back the last half-move & returns move object
@@ -205,7 +205,7 @@ function moveWithVoice(target) {
     // so it displays before cleanup
     cleanTarget = cleanUp(target);
 
-    if (cleanTarget.match(/undo|endear|takeback|whoops|whydididothat|Whatthe|Badmove|badmove|stupidcomputer/g)) {
+    if (cleanTarget.match(/undo|endear|takeback|whoops|whydididothat|Whatthe|Badnove|badnove|stupidconputer/g)) {
         undoMove();
         return;
     }
@@ -240,8 +240,8 @@ function cleanUp(target) {
         /and/g, 'n', /indy/g, 'nd', /angie/g, 'ng', /^8/g, 'a', /one/g, '1', /two/g, '2', /three/g, '3', 
         /four/g, '4', /five/g, '5', /six/g, '6', /seven/g, '7', /eight/g, '8', /nine/g, '9', /any/g, 'ne',
         /m/g, 'n', /of/g, 'f', /to/g, '2', /pawn|awn|lawn|brawn|spawn/g, '', /knight|night|nite/g, 'n', 
-         /bishop|ketchup/g, 'b', /rook|book|cook|nook|brook|brooke/g, 'r', /queen|green|mean|wean/g, 'q',
-          /king|wing|thing|sing/g, 'k', /capture/g, 'x', /ehive/g, 'e5', /he/g, 'e'];
+        /bishop|ketchup/g, 'b', /rook|book|cook|nook|brook|brooke/g, 'r', /queen|green|mean|wean/g, 'q',
+        /king|wing|thing|sing/g, 'k', /capture/g, 'x', /hive/g, '5', /he/g, 'e'];
       
     // iterate through TO_REPLACE and replace each regex with its replacement
     for (let i = 0; i < TO_REPLACE.length; i += 2) {
