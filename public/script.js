@@ -239,9 +239,9 @@ function cleanUp(target) {
     const TO_REPLACE = [/-|\s/g, '', /affix/g, 'a6', /before/g, 'b4', /igor/g, 'e4', /envy/g, 'nb', /for/g, '4',
         /and/g, 'n', /indy/g, 'nd', /angie/g, 'ng', /^8/g, 'a', /one/g, '1', /two/g, '2', /three/g, '3', 
         /four/g, '4', /five/g, '5', /six/g, '6', /seven/g, '7', /eight/g, '8', /nine/g, '9', /any/g, 'ne',
-        /m/g, 'n', /to/g, '2', /pawn|awn|lawn|brawn|spawn/g, '', /knight|night|nite/g, 'k', /bishop|ketchup/g, 'b',
-        /rook|book|cook|nook|brook|brooke/g, 'r', /queen|green|mean|wean/g, 'q', /king|wing|thing|sing/g, 'k',
-        /capture/g, 'x', /ehive/g, 'e5', /he/g, 'e'];
+        /m/g, 'n', /of/g, 'f', /to/g, '2', /pawn|awn|lawn|brawn|spawn/g, '', /knight|night|nite/g, 'n', 
+         /bishop|ketchup/g, 'b', /rook|book|cook|nook|brook|brooke/g, 'r', /queen|green|mean|wean/g, 'q',
+          /king|wing|thing|sing/g, 'k', /capture/g, 'x', /ehive/g, 'e5', /he/g, 'e'];
       
     // iterate through TO_REPLACE and replace each regex with its replacement
     for (let i = 0; i < TO_REPLACE.length; i += 2) {
