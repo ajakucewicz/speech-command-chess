@@ -200,11 +200,12 @@ let getPieceValue = function (piece, x, y) {
 // moves the piece to the specified spot via voice command
 // takes a string
 function moveWithVoice(target) {
+
     // string representation of move to pass to renderMoveHistory if move is invalid
     // so it displays before cleanup
     cleanTarget = cleanUp(target);
 
-    if (cleanTarget.match(/undo|endear|takeback|whoops|whydididothat|Whatthe|Badnove|badnove|stupidconputer/g)) {
+    if (cleanTarget.match(/undo|endear|takeback|whoops|whydididothat|Whatthe|Badmove|badmove|stupidcomputer/g)) {
         undoMove();
         return;
     }
@@ -229,17 +230,18 @@ function moveWithVoice(target) {
 }
 
 function cleanUp(target) {
+
     // cleans up inconsistencies in input string
     target = target.toLowerCase();
     
     // please hire us for STEP   
     // potential : [/zero/g, '0'], 
-    const TO_REPLACE = [/-|\s/g, '', /affix/g, 'a6', /before/g, 'b4', /envy/g, 'nb', /for/g, '4', /and/g, 'n',
-        /indy/g, 'nd', /angie/g, 'ng', /one/g, '1', /two/g, '2', /three/g, '3', /four/g, '4',
-        /five/g, '5', /six/g, '6', /seven/g, '7', /eight/g, '8', /nine/g, '9', /any/g, 'ne',
+    const TO_REPLACE = [/-|\s/g, '', /affix/g, 'a6', /before/g, 'b4', /igor/g, 'e4', /envy/g, 'nb', /for/g, '4',
+        /and/g, 'n', /indy/g, 'nd', /angie/g, 'ng', /^8/g, 'a', /one/g, '1', /two/g, '2', /three/g, '3', 
+        /four/g, '4', /five/g, '5', /six/g, '6', /seven/g, '7', /eight/g, '8', /nine/g, '9', /any/g, 'ne',
         /m/g, 'n', /to/g, '2', /pawn|awn|lawn|brawn|spawn/g, '', /knight|night|nite/g, 'k', /bishop|ketchup/g, 'b',
         /rook|book|cook|nook|brook|brooke/g, 'r', /queen|green|mean|wean/g, 'q', /king|wing|thing|sing/g, 'k',
-        /ehive/g, 'e5', /he/g, 'e'];
+        /capture/g, 'x', /ehive/g, 'e5', /he/g, 'e'];
       
     // iterate through TO_REPLACE and replace each regex with its replacement
     for (let i = 0; i < TO_REPLACE.length; i += 2) {

@@ -1,18 +1,31 @@
 
+let speechCom; 
+
 function setup() {
-    noCanvas();
-    let speechCom = new p5.SpeechRec('en-US', gotSpeech);
-    
-    speechCom.continuous = true;
+
+    speechCom = new p5.SpeechRec('en-US', gotSpeech);
+
+    speechCom.continuous = false;
     speechCom.interimResults = false;
 
-    speechCom.start();
+}
 
-    function gotSpeech() {
-        if (speechCom.resultValue) {
-           console.log(speechCom.resultString);
-           moveWithVoice(speechCom.resultString)
-        }
-        console.log(speechCom);
+function gotSpeech() {
+
+    let command;
+
+    if (speechCom.resultValue) {
+        command = speechCom.resultString;
+        console.log(command);
+        moveWithVoice(command);
     }
+    console.log(command);
+
+    changeColor('#00bc8c')
+}
+
+function changeColor(color) {
+    let btn = document.getElementById('speech');
+    btn.style.backgroundColor = color;
+    btn.style.borderColor = color;
 }
