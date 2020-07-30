@@ -1,22 +1,31 @@
 
-
-//let myVoice = new p5.speech();
+let speechCom; 
 
 function setup() {
-    noCanvas();
-    let speechCom = new p5.SpeechRec('en-US', gotSpeech);
-    
-    let continuous = true;
-    let interim = false;
 
-    speechCom.start(continuous, interim);
+    speechCom = new p5.SpeechRec('en-US', gotSpeech);
 
-    function gotSpeech() {
-        if (speechCom.resultValue) {
-           // createP(speechCom.resultString);
-           console.log(speechCom.resultString);
-           moveWithVoice(speechCom.resultString)
-        }
-        console.log(speechCom);
+    speechCom.continuous = false;
+    speechCom.interimResults = false;
+
+}
+
+function gotSpeech() {
+
+    let command;
+
+    if (speechCom.resultValue) {
+        command = speechCom.resultString;
+        console.log(command);
+        moveWithVoice(command);
     }
+    console.log(command);
+
+    changeColor('#00bc8c')
+}
+
+function changeColor(color) {
+    let btn = document.getElementById('speech');
+    btn.style.backgroundColor = color;
+    btn.style.borderColor = color;
 }

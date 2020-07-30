@@ -1,7 +1,6 @@
 let board;
 let game = new Chess();
 
-
 // minimax functions
 
 // returns the current best move
@@ -201,11 +200,21 @@ let getPieceValue = function (piece, x, y) {
 // moves the piece to the specified spot via voice command
 // takes a string
 function moveWithVoice(target) {
-    let move = game.move(cleanUp(target), {sloppy: true});
+
+    // string representation of move to pass to renderMoveHistory if move is invalid
+    // so it displays before cleanup
+    cleanTarget = cleanUp(target);
+
+    if (cleanTarget.match(/undo|endear|takeback|whoops|whydididothat|Whatthe|Badmove|badmove|stupidcomputer/g)) {
+        undoMove();
+        return;
+    }
+
+    let move = game.move(cleanTarget, {sloppy: true});
 
     // if the move is not valid, exit function
     if (move === null) {
-        createP('invalid move');
+        renderMoveHistory(game.history(), true, target)
         return;
     }
     console.log(move);
@@ -221,15 +230,18 @@ function moveWithVoice(target) {
 }
 
 function cleanUp(target) {
+
     // cleans up inconsistencies in input string
     target = target.toLowerCase();
     
     // please hire us for STEP   
-    const TO_REPLACE = [/-|\s/g, '', /before/g, 'b4', /envy/g, 'nb', /for/g, '4', /and/g, 'n',
-        /indy/g, 'nd', /angie/g, 'ng', /one/g, '1', /two/g, '2', /three/g, '3', /four/g, '4',
-        /five/g, '5', /six/g, '6', /seven/g, '7', /eight/g, '8', /nine/g, '9', /zero/g, '0', /any/g, 'ne',
+    // potential : [/zero/g, '0'], 
+    const TO_REPLACE = [/-|\s/g, '', /affix/g, 'a6', /before/g, 'b4', /igor/g, 'e4', /envy/g, 'nb', /for/g, '4',
+        /and/g, 'n', /indy/g, 'nd', /angie/g, 'ng', /^8/g, 'a', /one/g, '1', /two/g, '2', /three/g, '3', 
+        /four/g, '4', /five/g, '5', /six/g, '6', /seven/g, '7', /eight/g, '8', /nine/g, '9', /any/g, 'ne',
         /m/g, 'n', /to/g, '2', /pawn|awn|lawn|brawn|spawn/g, '', /knight|night|nite/g, 'k', /bishop|ketchup/g, 'b',
-        /rook|book|cook|nook|brook|brooke/g, 'r', /queen|green|mean|wean/g, 'q', /king|wing|thing|sing/g, 'k'];
+        /rook|book|cook|nook|brook|brooke/g, 'r', /queen|green|mean|wean/g, 'q', /king|wing|thing|sing/g, 'k',
+        /capture/g, 'x', /ehive/g, 'e5', /he/g, 'e'];
       
     // iterate through TO_REPLACE and replace each regex with its replacement
     for (let i = 0; i < TO_REPLACE.length; i += 2) {
@@ -244,6 +256,16 @@ function cleanUp(target) {
     console.log(target); 
     
     return target;
+}
+
+function undoMove() {
+    // undo ai move then player move
+    game.undo();
+    game.undo();
+    // updates text representation of the game state
+    renderMoveHistory(game.history()); 
+    // update the board position
+    board.position(game.fen());
 }
 
 // called when the user trys to drag a piece
@@ -288,15 +310,23 @@ let getBestMove = function (game) {
     return bestMove;
 };
 
-let renderMoveHistory = function (moves) {
+let renderMoveHistory = function (moves, isInvalid = false, wrongMove = '') {
     let historyElement = $('#move-history').empty();
     historyElement.empty();
+
     for (let i = 0; i < moves.length; i = i + 2) {
-        historyElement.append('<span>' + moves[i] + ' ' + ( moves[i + 1] ? moves[i + 1] : ' ') + '</span><br>')
+        historyElement.append('<span>' + moves[i] + ' ' + (moves[i + 1] ? moves[i + 1] : ' ') + '</span><br>');
     }
+
+    if (isInvalid) {
+        historyElement.append('<span>Invalid move: ' + wrongMove + '</span><br>');
+    }
+
     historyElement.scrollTop(historyElement[0].scrollHeight);
 
 };
+
+
 
 let onDrop = function (source, target) {
 
