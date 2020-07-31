@@ -15,11 +15,6 @@ h1 {
 .move-history {
     max-height: 100px;
     overflow-y: scroll;
+    width: 600px;
 }
-
-/*button {
-    text-align: center;
-    align-content: center;
-}*/
-
 
