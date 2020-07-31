@@ -15,6 +15,6 @@ h1 {
 .move-history {
     max-height: 100px;
     overflow-y: scroll;
-    width: 600px;
+    width: 500px;
 }
 
