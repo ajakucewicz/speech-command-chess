@@ -6,7 +6,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
 
-
     <!-- bootstrap css -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/darkly/bootstrap.min.css" integrity="sha384-Bo21yfmmZuXwcN/9vKrA5jPUMhr7znVBBeLxT9MA4r2BchhusfJ6+n8TLGUcRAtL" crossorigin="anonymous">
     <link rel="stylesheet" href="lib/chessboardjs/css/chessboard-0.3.0.css">
@@ -37,13 +36,13 @@
                 <div class="container"> 
 
                     <div class="row justify-content-center"> 
-                        <h4 style = 'margin-top: -40px; margin-bottom: 30px;'>Notation</h4>
+                        <h3 style = 'margin-top: -30px; margin-bottom: 30px; '>Notation</h3>
                     </div>
 
                     <div class="row"> 
 
                         <div class="col-6">
-                            <ul class="list-unstyled" style = "text-align: left; margin-bottom: 30px;">
+                            <ul class="list-unstyled" style = "text-align: left; margin-bottom: 30px; font-size: 20px;">
                                 <li>King = 'K' / 'King'</li>
                                 <li>Queen = 'Q' / 'Queen'</li>
                                 <li>Bishop = 'B' / 'Bishop'</li>
@@ -53,18 +52,25 @@
 
                         <div class="col-6">
 
-                            <ul class="list-unstyled" style = "text-align: left; margin-bottom: 30px;">
+                            <ul class="list-unstyled" style = "text-align: left; margin-bottom: 10px; font-size: 20px;">
                                 <li>Rook = 'R' / 'Rook'</li>
                                 <li>Pawn = 'p' / 'Pawn' / no notation</li>
                                 <li>Capture = 'x' / 'Capture'</li>
                             </ul>
-
+                        
                         </div>
                     </div> 
-                
-                    <div class="row justify-content-left" style="margin-left: 0px; margin-top:20px">  
-                        <h5>try: "e4" or "pawn e4"</h5>
-                        <!-- <h5>ex: "Bf8xd6" / "Bishop f8 capture d6"</h5> -->
+                    
+                    <div class="row justify-content-center">
+                        <hr >
+                    </div>
+
+                    <div class="row justify-content-left" style="margin-left: 0px; margin-top:-30px;">  
+                        
+                        <h4 style="margin-bottom: 35px; border-top: 3px solid; padding-top: 30px;">Press 'start audio' to record your command</h4>
+                        <h4 style="margin-bottom: -10px">try: "e4" or "pawn e4"<br></h4>
+
+                    </div>  
                     </div>  
 
                 </div> 
@@ -74,7 +80,7 @@
 
     <div class="row p-4"> <!-- row3-->
 
-        <div class="col-6" style='margin-left: 30px; margin-top: 30px;'>   <!-- row3 col1-->
+        <div class="col-6" style='margin-left: 50px; margin-top: 30px;'>   <!-- row3 col1-->
             Search depth:
             <select id="search-depth">
                 <option value="1">1</option>
@@ -92,20 +98,21 @@
             <span>Positions/s: <span id="positions-per-s"></span> </span>
             <br>
             <br>
+            
             <div id="move-history" class="move-history">
             </div>
 
         </div> 
 
-        <div class="col col lg-3" style="margin-left: 70px"> <!-- row3 col2-->
+        <div class="col col lg-3" style="margin-left: 20px"> <!-- row3 col2-->
             
-            <button type="button" id="speech" class="btn btn-success" onclick="changeColor('red'); speechCom.start();">Start</button>
+            <button type="button" id="speech" class="btn btn-success" onclick="changeColor('red'); speechCom.start();">Start Audio</button>
 
         </div>
 
-        <div class="col col lg-3" style="margin-left: 70px"> <!-- row3 col3-->
+        <div class="col col lg-3" style="margin-right: 100px"> <!-- row3 col3-->
 
-            <button type="button" class="btn btn-primary" onclick="undoMove();">Undo</button>
+            <button type="button" class="btn btn-primary" onclick="undoMove();">Undo Move</button>
 
         </div>
     </div>
@@ -134,8 +141,3 @@
 
 </body>
 </html>
-
-
-
-
-

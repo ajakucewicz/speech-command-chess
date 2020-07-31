@@ -5,13 +5,13 @@ let game = new Chess();
 
 // returns the current best move
 let minimaxRoot =function(depth, game, isMax) {
-
     let newMoves = game.ugly_moves();
     let best = -9999;
     let bestFound;
 
     for(let i = 0; i < newMoves.length; i++) {
-        let newMove = newMoves[i]
+        let newMove = newMoves[i];
+
         game.ugly_move(newMove);
         let value = minimax(depth - 1, game, -10000, 10000, !isMax);
         game.undo(); //undo() takes back the last half-move & returns move object
@@ -29,7 +29,8 @@ let minimaxRoot =function(depth, game, isMax) {
 // returns the value of the best move for the current player
 let minimax = function (depth, game, alpha, beta, isMax) {
     positionCount++;
-    if (depth === 0) {
+    // if (depth <= 0 && isQuiet(game))
+    if (depth <= 0) {
         return -evaluateBoard(game.board());
     }
 
@@ -75,6 +76,20 @@ let minimax = function (depth, game, alpha, beta, isMax) {
         return best;
     }
 };
+
+// function isQuiet(game) {
+//     let possibleMoves = game.ugly_moves();
+//     for (let i = 0; i < possibleMoves.length; i++) {
+//         let move = game.ugly_move(possibleMoves[i]);
+//         if (move.includes('x') || move.includes('+')) {
+//             game.undo();
+//             return false;
+//         }
+//         game.undo();
+//         return true;
+//     }
+// }
+
 
 // returns numerical evaluation of the passed board state
 // positive if white is favored and negative if black is favored
@@ -205,7 +220,7 @@ function moveWithVoice(target) {
     // so it displays before cleanup
     cleanTarget = cleanUp(target);
 
-    if (cleanTarget.match(/undo|endear|takeback|whoops|whydididothat|Whatthe|Badmove|badmove|stupidcomputer/g)) {
+    if (cleanTarget.match(/undo|endear|takeback|whoops|whydididothat|Whatthe|Badnove|badnove|stupidconputer/g)) {
         undoMove();
         return;
     }
@@ -239,9 +254,9 @@ function cleanUp(target) {
     const TO_REPLACE = [/-|\s/g, '', /affix/g, 'a6', /before/g, 'b4', /igor/g, 'e4', /envy/g, 'nb', /for/g, '4',
         /and/g, 'n', /indy/g, 'nd', /angie/g, 'ng', /^8/g, 'a', /one/g, '1', /two/g, '2', /three/g, '3', 
         /four/g, '4', /five/g, '5', /six/g, '6', /seven/g, '7', /eight/g, '8', /nine/g, '9', /any/g, 'ne',
-        /m/g, 'n', /to/g, '2', /pawn|awn|lawn|brawn|spawn/g, '', /knight|night|nite/g, 'k', /bishop|ketchup/g, 'b',
-        /rook|book|cook|nook|brook|brooke/g, 'r', /queen|green|mean|wean/g, 'q', /king|wing|thing|sing/g, 'k',
-        /capture/g, 'x', /ehive/g, 'e5', /he/g, 'e'];
+        /m/g, 'n', /of/g, 'f', /to/g, '2', /pawn|awn|lawn|brawn|spawn/g, '', /knight|night|nite/g, 'n', 
+        /bishop|ketchup/g, 'b', /rook|book|cook|nook|brook|brooke/g, 'r', /queen|green|mean|wean/g, 'q',
+        /king|wing|thing|sing/g, 'k', /capture/g, 'x', /hive/g, '5', /he/g, 'e'];
       
     // iterate through TO_REPLACE and replace each regex with its replacement
     for (let i = 0; i < TO_REPLACE.length; i += 2) {
