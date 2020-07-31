@@ -5,12 +5,12 @@ let game = new Chess();
 
 // returns the current best move
 let minimaxRoot =function(depth, game, isMax) {
-
     let newMoves = game.ugly_moves();
     let best = -9999;
     let bestFound;
 
     for(let i = 0; i < newMoves.length; i++) {
+        let newMove = newMoves[i];
 
         game.ugly_move(newMove);
         let value = minimax(depth - 1, game, -10000, 10000, !isMax);
@@ -29,7 +29,8 @@ let minimaxRoot =function(depth, game, isMax) {
 // returns the value of the best move for the current player
 let minimax = function (depth, game, alpha, beta, isMax) {
     positionCount++;
-    if (depth === 0) {
+    // if (depth <= 0 && isQuiet(game))
+    if (depth <= 0) {
         return -evaluateBoard(game.board());
     }
 
@@ -75,6 +76,20 @@ let minimax = function (depth, game, alpha, beta, isMax) {
         return best;
     }
 };
+
+// function isQuiet(game) {
+//     let possibleMoves = game.ugly_moves();
+//     for (let i = 0; i < possibleMoves.length; i++) {
+//         let move = game.ugly_move(possibleMoves[i]);
+//         if (move.includes('x') || move.includes('+')) {
+//             game.undo();
+//             return false;
+//         }
+//         game.undo();
+//         return true;
+//     }
+// }
+
 
 // returns numerical evaluation of the passed board state
 // positive if white is favored and negative if black is favored
