@@ -1,14 +1,12 @@
+var sslRedirect = require('heroku-ssl-redirect');
 var express = require('express');
 var app = express();
 
-var port_number = app.listen(process.env.PORT || 8080);
+// enable ssl redirect
+app.use(sslRedirect());
 
-//app.enable('trust proxy');
+var port_number = app.listen(process.env.PORT || 8080);
 
 app.use(express.static('public'));
 
 console.log('server running!');
-
-
-
-app.listen(port_number);
