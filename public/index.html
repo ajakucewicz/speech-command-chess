@@ -79,8 +79,8 @@
     </div>
 
     <div class="row p-4"> <!-- row3-->
-
-        <div class="col-6" style='margin-left: 50px; margin-top: 30px;'>   <!-- row3 col1-->
+        <div class="col-1"></div>
+        <div class="col-5" style='margin-left: 30px; margin-top: 0px;'>   <!-- row3 col1-->
             Search depth:
             <select id="search-depth">
                 <option value="1">1</option>
@@ -104,16 +104,14 @@
 
         </div> 
 
-        <div class="col col lg-3" style="margin-left: 20px"> <!-- row3 col2-->
+        <div class="col-2" style="margin-left: 50px;"> <!-- row3 col2-->
             
             <button type="button" id="speech" class="btn btn-success" onclick="changeColor('red'); speechCom.start();">Start Audio</button>
 
         </div>
 
-        <div class="col col lg-3" style="margin-right: 100px"> <!-- row3 col3-->
-
-            <button type="button" class="btn btn-primary" onclick="undoMove();">Undo Move</button>
-
+        <div class="col-3"> <!-- row3 col3-->
+            <button type="button" class="btn btn-primary" onclick="undoMove();">Undo Move</button>    
         </div>
     </div>
 </div>
